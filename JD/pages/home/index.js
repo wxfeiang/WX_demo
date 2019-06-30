@@ -41,7 +41,7 @@ Page({
           pageRow: res.data.pageRow
         })
         // 关闭加载
-        wx.hideLoading()
+        wx.hideLoading();
       }
     })
 
