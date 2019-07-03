@@ -31,7 +31,7 @@ Page({
         'content-type': 'application/json' // 默认值，返回的数据设置为json数组格式
       },
       success(res) {
-      console.log(res)
+     // console.log(res)
      // console.log(this)  不能直接打印this
         self.setData({
 

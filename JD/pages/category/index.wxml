@@ -1,2 +1,48 @@
-<!--pages/category/index.wxml-->
-<text>pages/category/index.wxml</text>
+<view class='caregory'>
+<!-- left -->
+  <scroll-view class="nav_left" scroll-y>
+     <block wx:for="{{navLeftItems}}">
+     <!-- current   bind index 事件当中获取  下标相等的时候-->
+      <view 
+        class="nav_left_items {{curIndex == index ? 'nav_left_item-active' : ''}}" 
+        data-index="{{index}}"
+        bindtap="switchRightTab"
+       >
+      {{item}}
+      </view>
+    </block>
+  
+  </scroll-view>
+<!-- right -->
+  <scroll-view class='nav_right' scroll-y>
+    <!--  对应下标 -->
+    <!-- 点击做边 是否存在 (多个展示 ) -->
+    <view wx:if='{navRightItems[curIndex]' style='padding-bottom: 10px;'>
+        <!-- 两层遍历    -->
+        <!--  
+          navRightItems[curIndex]  ===  wx:for-item="item"
+        
+        
+        -->
+        
+      <block wx:for="{{navRightItems[curIndex]}}" wx:for-item="item">
+
+        <view class='jd-category'>
+          <view class='title'>{{item.title}}</view>
+          <view class='jd-category-wrap'>
+            <block wx:for="{{item.desc}}" wx:for-item="list">
+              <view class='jd-category-style' data-txt="{{list.text}}" bindtap='showListView'>
+                <image class='list_img' src='{{list.img}}'></image>
+                <text class='list_text'>{{list.text}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
+
+      </block>
+
+    </view>
+ 
+  </scroll-view>
+</view>
+
