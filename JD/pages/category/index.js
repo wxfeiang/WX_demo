@@ -2,7 +2,7 @@
 const interfaces = require('../../utils/urlconfig.js');
 Page({
 
-  /**
+  /** 
    * 页面的初始数据
    */
   data: {
@@ -38,8 +38,8 @@ Page({
 
   },
   /*
- * 记录左侧点击的按钮下标 
- */
+   * 记录左侧点击的按钮下标 
+   */
   switchRightTab(e) {
     //console.log(e)
     let index = parseInt(e.currentTarget.dataset.index);
@@ -48,16 +48,17 @@ Page({
     })
   },
   /**
-  * 点击进入列表页
-  * 列表页参数 title
- */
+   * 点击进入列表页
+   * 列表页参数 title
+   */
   showListView(e) {
     let txt = e.currentTarget.dataset.txt
+    console.log(e)
     wx.navigateTo({
       // 跳转到新页面
       url: '/pages/list/index?title=' + txt
     })
   }
 
-  
+
 })

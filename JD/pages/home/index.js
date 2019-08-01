@@ -14,7 +14,14 @@ Page({
     vertical: false,
     autoplay: true,
     interval: 3000,
-    duration: 500
+    duration: 500,
+
+    brandList: [],
+    wordindex: [],
+    toView: '#',
+
+
+
   },
 
   /**
@@ -31,10 +38,9 @@ Page({
         'content-type': 'application/json' // 默认值，返回的数据设置为json数组格式
       },
       success(res) {
-     // console.log(res)
-     // console.log(this)  不能直接打印this
+        // console.log(res)
+        // console.log(this)  不能直接打印this
         self.setData({
-
           swipers: res.data.swipers,
           logos: res.data.logos,
           quicks: res.data.quicks,
@@ -46,6 +52,28 @@ Page({
     })
 
   },
+  // 点击展示底部菜单
+  actioncnt: function () {
+    wx.showActionSheet({
+      itemList: ['钱包支付', '微信支付'],
+      success(res) {
+        console.log(res.tapIndex)
+        if (res.tapIndex == 0) {
+          console.log("钱包支付");
+          return;
+        }
+        if (res.tapIndex == 1) {
+          console.log("微信支付");
+          return;
+        }
+      },
+      fail(res) {
+        console.log(res.errMsg)
+      }
+    })
+  },
+
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
