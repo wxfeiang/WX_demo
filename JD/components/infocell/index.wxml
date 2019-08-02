@@ -1,0 +1,7 @@
+<!--components/infocell/index.wxml-->
+<view class='payWrap'>
+    <text class='title'>{{title}}</text>
+    <text class='desc'>{{desc}}</text>
+    <!-- 给3个点加事件 -->
+    <text class='icon' bindtap='popView'>...</text>
+</view>

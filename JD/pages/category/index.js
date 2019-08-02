@@ -58,7 +58,9 @@ Page({
       // 跳转到新页面
       url: '/pages/list/index?title=' + txt
     })
-  }
+  },
+
+
 
 
 })

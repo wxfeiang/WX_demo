@@ -9,6 +9,13 @@ Page({
 
     partData: {},
     baitiao: [],
+    baitiaoSelectItem: {
+      desc: "【白条支付】首单享立减优惠"
+    },
+    hideBaitiao: true, // 是否隐藏白条的遮罩
+    hideBuy: true, // 是否购买的遮罩
+    badgeCount: 0
+
 
   },
 
@@ -27,9 +34,12 @@ Page({
       url: interfaces.productionDetail,
       success(res) {
         let result = null
+        console.log(res);
+        //  后台返回数据格式原因
         res.data.forEach(data => {
           if (data.partData.id == id)
-            result = data
+            console.log(data)
+          result = data
         })
 
         self.setData({
@@ -42,7 +52,41 @@ Page({
     })
 
   },
+  popBaitiaoView() {
+    //console.log("显示白条")
+    this.setData({
+      hideBaitiao: false
+    })
 
+  },
+  popBuyView() {
+    // console.log("显示购买");
+    this.setData({
+      hideBuy: false
+    })
+  },
+  //  更新选中得数据
+  updateSelectItem(e) { // 更新data
+    console.log(e)
+    this.setData({
+      baitiaoSelectItem: e.detail
+    })
+  },
+  updateCount(e) { //更新count
+    //  更新组件传过来得数量值
+    var partData = this.data.partData
+    partData.count = e.detail.val
+    this.setData({
+      partData: partData
+    })
+
+  },
+  // 底部加入购物车
+  addCart(e) {
+    //console.log("jiaru gouwuche ")
+    // 先获取 存储 
+
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

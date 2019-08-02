@@ -1,0 +1,26 @@
+<!--  根据状态判断显示 -->
+<view class='popupDom' hidden='{{hideBuy}}' data-target="self" catchtap='hideBuyView'>
+    <view class='pop_main'>
+        <view class='buy_header'>
+            <view class='head_img'>
+                <image src='{{partData.loopImgUrl[0]}}'></image>
+            </view>
+            <view class='info'>
+                <text class='price'>¥{{partData.price}}</text>
+                <text class='selcount'>已选 {{partData.count}}件</text>
+            </view>
+            <text data-target="self" catchtap='hideBuyView'>x</text>
+        </view>
+        <view class='buy_body'>
+            <text>数量</text>
+            <!-- 组件引入组件 -->
+            <view class='amount'>
+                <amount count='{{partData.count}}' bind:myevent='getCount'></amount>
+            </view>
+        </view>
+        <!-- 事件传递 -->
+        <view class='pop_btn'>
+            <button catchtap='buy'>加入购物车</button>
+        </view>
+    </view>
+</view>

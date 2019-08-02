@@ -141,8 +141,9 @@ Page({
   },
   switchProlistDetail(e) {
     // 拿到当前的key
-    //console.log(e)
+    console.log(e)
     var index = e.currentTarget.dataset.index
+    // 找到对应下标得ID 
     wx.navigateTo({
       // 拼接当前的id 
       url: '/pages/detail/index?id=' + this.data.prolist[index].id,
