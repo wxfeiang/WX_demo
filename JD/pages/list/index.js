@@ -144,11 +144,14 @@ Page({
     console.log(e)
     var index = e.currentTarget.dataset.index
     // 找到对应下标得ID 
+    console.log(index + "*****************************")
+    console.log(this.data.prolist)
     wx.navigateTo({
       // 拼接当前的id 
       url: '/pages/detail/index?id=' + this.data.prolist[index].id,
     })
   },
+
 
   /**
    * 用户点击右上角分享

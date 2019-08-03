@@ -6,7 +6,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-
     partData: {},
     baitiao: [],
     baitiaoSelectItem: {
@@ -14,7 +13,7 @@ Page({
     },
     hideBaitiao: true, // 是否隐藏白条的遮罩
     hideBuy: true, // 是否购买的遮罩
-    badgeCount: 0
+    badgeCount: 0 // 小图标
 
 
   },
@@ -25,33 +24,29 @@ Page({
   onLoad: function (options) {
     const id = options.id
     const self = this
-
-    // 请求数据
+    // 发送接口请求
     wx.showLoading({
-      title: "加载中......"
+      title: '加载中...',
     })
     wx.request({
       url: interfaces.productionDetail,
       success(res) {
         let result = null
-        console.log(res);
-        //  后台返回数据格式原因
         res.data.forEach(data => {
           if (data.partData.id == id)
-            console.log(data)
-          result = data
+            result = data
         })
 
         self.setData({
           partData: result.partData,
           baitiao: result.baitiao
         })
-
         wx.hideLoading()
       }
     })
-
   },
+
+
   popBaitiaoView() {
     //console.log("显示白条")
     this.setData({
@@ -83,9 +78,63 @@ Page({
   },
   // 底部加入购物车
   addCart(e) {
-    //console.log("jiaru gouwuche ")
-    // 先获取 存储 
+    console.log("添加了购物车")
+    var self = this
+    wx.getStorage({
+      key: 'cartInfo',
+      success(res) {
+        const cartArray = res.data
+        let partData = self.data.partData
+        let isExit = false; // 判断数组是否存在该商品
+        cartArray.forEach(cart => {
+          if (cart.id == partData.id) { // 存在该商品
+            isExit = true
+            cart.total += self.data.partData.count
+            wx.setStorage({
+              key: 'cartInfo',
+              data: cartArray,
+            })
+          }
+        })
+        if (!isExit) { // 不存在该商品
+          partData.total = self.data.partData.count
+          cartArray.push(partData)
+          wx.setStorage({
+            key: 'cartInfo',
+            data: cartArray,
+          })
+        }
+        self.setBadge(cartArray)
+      },
+      fail() {
+        let partData = self.data.partData
+        partData.total = self.data.partData.count
+        let cartArray = []
+        cartArray.push(partData)
+        wx.setStorage({
+          key: 'cartInfo',
+          data: cartArray,
+        })
+        // 商品数量小图标
+        self.setBadge(cartArray)
+      }
+    })
+    // 购物车提醒
+    wx.showToast({
+      title: '加入购物车成功',
+      icon: 'success',
+      duration: 3000
+    })
 
+
+  },
+  /**
+   * 设置购物车图标
+   */
+  setBadge(cartArray) {
+    this.setData({
+      badgeCount: cartArray.length
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -98,6 +147,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    const self = this
+    wx.getStorage({
+      key: 'cartInfo',
+      success: function (res) {
+        const cartArray = res.data
+        self.setBadge(cartArray)
+      },
+    })
 
   },
 
