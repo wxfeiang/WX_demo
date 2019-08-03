@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    cartArray: []
 
   },
 
@@ -13,6 +14,18 @@ Page({
    */
   onLoad: function (options) {
 
+  },
+  /**
+   * 子组件修改count触发
+   */
+  onGetCount: function (e) {
+    const index = e.currentTarget.dataset.index
+    const cartArray = this.data.cartArray
+    cartArray[index].total = e.detail.val
+    // 更新data
+    this.setData({
+      cartArray: cartArray
+    })
   },
 
   /**
@@ -26,6 +39,29 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var self = this
+    // 获取 本地存储
+    wx.getStorage({
+      key: 'cartInfo',
+      success: function (res) {
+        // success
+        console.log(res.data)
+        const cartArray = res.data
+
+        self.setData({
+          cartArray: cartArray,
+
+        })
+        cartArray.length > 0 ?
+          wx.setTabBarBadge({
+            index: 2, // 下标位置
+            text: String(cartArray.length)
+          }) : wx.removeTabBarBadge({
+            index: 2,
+          })
+      }
+
+    })
 
   },
 
